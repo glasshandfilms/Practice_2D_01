@@ -16,22 +16,28 @@ public class Player : MonoBehaviour {
 	
 	void Start () {
 
-        transform.position = new Vector3(0, 0, 0);
-        
-
-        
+        transform.position = new Vector3(0, 0, 0);    
+                
 	}
 	
-	// Update is called once per frame
+	
 	void Update () {
-        //when you press left click, fire
+
+        PlayerMovement();
+        Laser();
         
+        
+        
+	}
+
+    private void PlayerMovement ()
+    {   
+        //Player Keys and SpeedBurst Check
         float horizontalInput = Input.GetAxis("Horizontal") * speed;
         float verticalInput = Input.GetAxis("Vertical") * speed;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            //Debug.Log("shift was held down");
             transform.Translate(Vector3.right * horizontalInput * speed * speedburst * Time.deltaTime);
             transform.Translate(Vector3.up * verticalInput * speed * speedburst * Time.deltaTime);
         }
@@ -40,9 +46,34 @@ public class Player : MonoBehaviour {
             transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
             transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
         }
+
+
+        //Player Boundaries
+        if (transform.position.x > 8.75f)
+        {
+            transform.position = new Vector3(-8.5f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -8.75f)
+        {
+            transform.position = new Vector3(8.5f, transform.position.y, 0);
+        }
+       
+        if (transform.position.y > 4)
+        {
+            transform.position = new Vector3(transform.position.x, 4, 0);
+        }
+        else if (transform.position.y < -4)
+        {
+            transform.position = new Vector3(transform.position.x, -4, 0);
+        }
         
-        
-        
-        
-	}
+    }
+
+    private void Laser ()
+    {
+
+    }
+
+
+
 }
