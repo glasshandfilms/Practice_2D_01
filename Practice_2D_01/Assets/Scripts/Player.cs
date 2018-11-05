@@ -23,9 +23,14 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //when you press left click, fire
-		//when you press left, move left
-        //when you press right, move right
-        //when you press up, move up
-        //when you press down, move down
+        
+        float horizontalInput = Input.GetAxis("Horizontal") * speed;
+        float verticalInput = Input.GetAxis("Vertical") * speed;
+
+        transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+        transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
+        
+        
+        
 	}
 }
