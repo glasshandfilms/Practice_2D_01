@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
     private float speed;
     [SerializeField]
     private float speedburst;
+    [SerializeField]
+    private GameObject laser;
     //make a firing cooldown
 
 
@@ -71,7 +73,14 @@ public class Player : MonoBehaviour {
 
     private void Laser ()
     {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Debug.Log("Fire was pressed");
+            Instantiate(laser, transform.position + new Vector3(0, 0.98f,0  ), Quaternion.identity);
+           
+        }
 
+       
     }
 
 
