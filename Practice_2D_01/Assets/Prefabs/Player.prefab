@@ -57,6 +57,9 @@ MonoBehaviour:
   _speedburst: 2.5
   _laser: {fileID: 1751258387739046, guid: 923b9a3b046848c42b428ee9589f438f, type: 2}
   _fireRate: 0.25
+  tripleShotActivated: 0
+  _tripleShot: {fileID: 1734320941599730, guid: 9c641e7caf285f8489e796fcc3c15d6e,
+    type: 2}
 --- !u!212 &212383748629126290
 SpriteRenderer:
   m_ObjectHideFlags: 1

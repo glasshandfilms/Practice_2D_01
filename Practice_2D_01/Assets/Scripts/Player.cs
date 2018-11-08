@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    
+
     [SerializeField]
     private GameObject _player; 
     [SerializeField]
@@ -18,10 +20,12 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float _fireRate = 0.25f;
 
+    public bool tripleShotActivated;
+    [SerializeField]
+    private GameObject _tripleShot;
 
 
-	
-	void Start () {
+    void Start () {
 
         transform.position = new Vector3(0, 0, 0);    
                 
@@ -31,7 +35,7 @@ public class Player : MonoBehaviour {
 	void Update () {
 
         PlayerMovement();
-        Laser();
+        
         
         
         
@@ -73,27 +77,40 @@ public class Player : MonoBehaviour {
         {
             transform.position = new Vector3(transform.position.x, -4, 0);
         }
-        
+
+        //Player Fire Input
+        if (Input.GetButtonDown("Fire1") || (Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0)))
+        {
+            Shoot();
+        }
+
+
     }
 
-    private void Laser ()
-    {
-        Shoot();       
-    }
+    
 
     private void Shoot ()
     {
-        if (Input.GetButtonDown("Fire1") || (Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0)))
+        if (Time.time > _canFire)
         {
-            if (Time.time > _canFire)
+            if (tripleShotActivated == true)
+            {
+                Instantiate(_tripleShot, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+            }
+            else
+
             {
                 //Debug.Log("Fire was pressed");
                 Instantiate(_laser, transform.position + new Vector3(0, 0.98f, 0), Quaternion.identity);
-                _canFire = Time.time + _fireRate;
+                
             }
 
-
+            _canFire = Time.time + _fireRate;
         }
+            
+
+
+        
     }
 
 }

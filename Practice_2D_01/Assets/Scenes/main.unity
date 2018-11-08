@@ -345,6 +345,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114075482358669694, guid: 7b8df44b02633024894ade9960e65f9d,
+        type: 2}
+      propertyPath: tripleShotActivated
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b8df44b02633024894ade9960e65f9d, type: 2}
   m_IsPrefabAsset: 0
