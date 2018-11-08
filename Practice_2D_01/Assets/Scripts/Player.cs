@@ -5,14 +5,19 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    private GameObject player; 
+    private GameObject _player; 
     [SerializeField]
-    private float speed;
+    private float _speed;
     [SerializeField]
-    private float speedburst;
+    private float _speedburst;
     [SerializeField]
-    private GameObject laser;
+    private GameObject _laser;
     //make a firing cooldown
+
+    private float _canFire = 0f;
+    [SerializeField]
+    private float _fireRate = 0.25f;
+
 
 
 	
@@ -35,18 +40,18 @@ public class Player : MonoBehaviour {
     private void PlayerMovement ()
     {   
         //Player Keys and SpeedBurst Check
-        float horizontalInput = Input.GetAxis("Horizontal") * speed;
-        float verticalInput = Input.GetAxis("Vertical") * speed;
+        float horizontalInput = Input.GetAxis("Horizontal") * _speed;
+        float verticalInput = Input.GetAxis("Vertical") * _speed;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.Translate(Vector3.right * horizontalInput * speed * speedburst * Time.deltaTime);
-            transform.Translate(Vector3.up * verticalInput * speed * speedburst * Time.deltaTime);
+            transform.Translate(Vector3.right * horizontalInput * _speed * _speedburst * Time.deltaTime);
+            transform.Translate(Vector3.up * verticalInput * _speed * _speedburst * Time.deltaTime);
         }
         else
         {
-            transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
-            transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
+            transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
+            transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
         }
 
 
@@ -73,16 +78,22 @@ public class Player : MonoBehaviour {
 
     private void Laser ()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("Fire was pressed");
-            Instantiate(laser, transform.position + new Vector3(0, 0.98f,0  ), Quaternion.identity);
-           
-        }
-
-       
+        Shoot();       
     }
 
+    private void Shoot ()
+    {
+        if (Input.GetButtonDown("Fire1") || (Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0)))
+        {
+            if (Time.time > _canFire)
+            {
+                //Debug.Log("Fire was pressed");
+                Instantiate(_laser, transform.position + new Vector3(0, 0.98f, 0), Quaternion.identity);
+                _canFire = Time.time + _fireRate;
+            }
 
+
+        }
+    }
 
 }
