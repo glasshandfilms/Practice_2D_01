@@ -6,28 +6,23 @@ public class Player : MonoBehaviour {
 
     
 
-    [SerializeField]
-    private GameObject _player; 
-    [SerializeField]
-    private float _speed;
-    [SerializeField]
-    private float _speedburst;
-    [SerializeField]
-    private GameObject _laser;
-    //make a firing cooldown
-
-    private float _canFire = 0f;
-    [SerializeField]
-    private float _fireRate = 0.25f;
-
+    [SerializeField] private GameObject player; 
+    [SerializeField] private float speed;
+    [SerializeField] private float speedburst;
+    [SerializeField] private GameObject laser;
+    private float canFire = 0f;
+    [SerializeField] private float fireRate = 0.25f;
     public bool tripleShotActivated;
-    [SerializeField]
-    private GameObject _tripleShot;
+    public bool shieldActivated;
+    
+    [SerializeField] private GameObject tripleShot;
+    float tripleShotTimer;
 
 
     void Start () {
 
-        transform.position = new Vector3(0, 0, 0);    
+        transform.position = new Vector3(0, 0, 0);   
+        
                 
 	}
 	
@@ -35,8 +30,14 @@ public class Player : MonoBehaviour {
 	void Update () {
 
         PlayerMovement();
-        
-        
+
+        if (tripleShotActivated)
+        {
+            if(tripleShotTimer < Time.time)
+            {
+                tripleShotActivated = false;
+            }
+        }
         
         
 	}
@@ -44,18 +45,18 @@ public class Player : MonoBehaviour {
     private void PlayerMovement ()
     {   
         //Player Keys and SpeedBurst Check
-        float horizontalInput = Input.GetAxis("Horizontal") * _speed;
-        float verticalInput = Input.GetAxis("Vertical") * _speed;
+        float horizontalInput = Input.GetAxis("Horizontal") * speed;
+        float verticalInput = Input.GetAxis("Vertical") * speed;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.Translate(Vector3.right * horizontalInput * _speed * _speedburst * Time.deltaTime);
-            transform.Translate(Vector3.up * verticalInput * _speed * _speedburst * Time.deltaTime);
+            transform.Translate(Vector3.right * horizontalInput * speed * speedburst * Time.deltaTime);
+            transform.Translate(Vector3.up * verticalInput * speed * speedburst * Time.deltaTime);
         }
         else
         {
-            transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
-            transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
+            transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+            transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
         }
 
 
@@ -91,26 +92,41 @@ public class Player : MonoBehaviour {
 
     private void Shoot ()
     {
-        if (Time.time > _canFire)
+        if (Time.time > canFire)
         {
             if (tripleShotActivated == true)
             {
-                Instantiate(_tripleShot, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(tripleShot, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
             }
             else
 
             {
                 //Debug.Log("Fire was pressed");
-                Instantiate(_laser, transform.position + new Vector3(0, 0.98f, 0), Quaternion.identity);
+                Instantiate(laser, transform.position + new Vector3(0, 0.98f, 0), Quaternion.identity);
                 
             }
 
-            _canFire = Time.time + _fireRate;
+            canFire = Time.time + fireRate;
         }
             
 
 
         
+    }
+
+
+    public void ActivatePowerUp (PowerUp.Type type)
+    {
+        if(type == PowerUp.Type.TripleShot)
+        {
+            tripleShotActivated = true;
+            tripleShotTimer = Time.time + 10f;
+        }
+        else if(type == PowerUp.Type.Shield)
+        {
+            shieldActivated = true;
+            
+        }
     }
 
 }
