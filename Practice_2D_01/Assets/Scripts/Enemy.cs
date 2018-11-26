@@ -62,6 +62,10 @@ public class Enemy : MonoBehaviour {
             {
                 player.Damage();
             }
+            if (player.shieldActivated == true)
+            {
+                uiManager.UpdateScore();
+            }
             
             Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
             AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);

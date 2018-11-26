@@ -16,18 +16,28 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        
     }
 
     void Update()
     {
-        if(gameOver == true)
+        
+        if (gameOver == true)
         {
-            if(Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")) || (Input.GetMouseButtonDown(0)))
-            {
-                Instantiate(player, Vector3.zero, Quaternion.identity);
-                gameOver = false;
-                uiManager.HideTitleScreen();
-            }
+            StartCoroutine(DeathCounter());
+          
+        }
+    }
+
+    IEnumerator DeathCounter()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(player, Vector3.zero, Quaternion.identity);
+            gameOver = false;
+            uiManager.HideTitleScreen();
         }
     }
 

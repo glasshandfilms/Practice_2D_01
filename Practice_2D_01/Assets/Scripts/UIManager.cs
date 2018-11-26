@@ -14,10 +14,12 @@ public class UIManager : MonoBehaviour {
     public Text scoreText;
     public int score;
     public GameObject titleScreen;
+    public Slider fuelSlider;
+    public float fuelCount;
 
     public void UpdateLives(int currentLives)
     {
-        Debug.Log("Player lives: " + currentLives);
+        //Debug.Log("Player lives: " + currentLives);
         livesImageDisplay.sprite = livesSprites[currentLives];
     }
 
@@ -28,9 +30,9 @@ public class UIManager : MonoBehaviour {
         scoreText.text = "Score: " + score;
     }
 
-    public void UpdateFuel()
+    void Update()
     {
-
+        fuelSlider.value = fuelCount;
     }
 
     public void ShowTitleScreen()

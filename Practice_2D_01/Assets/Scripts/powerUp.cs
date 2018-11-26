@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
-    public enum Type { TripleShot, Shield }
+    public enum Type { TripleShot, Shield, Speed }
     
     [SerializeField] private float speed;
     
@@ -46,6 +46,10 @@ public class PowerUp : MonoBehaviour {
                 {
                     player.ActivatePowerUp(type);
                     
+                }
+                else if(type == Type.Speed)
+                {
+                    player.ActivatePowerUp(type);
                 }
                 AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
                 Destroy(this.gameObject);

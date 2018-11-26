@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
     private AudioSource audioSource;
     [SerializeField] private GameObject[] engines;
     private int hitCount = 0;
+    private float depleteFuelSpeed = 2;
 
 
 
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour {
 
         hitCount = 0;
 
+        uiManager.fuelCount = 1f;
 	}
 	
 	
@@ -88,8 +90,22 @@ public class Player : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.Translate(Vector3.right * horizontalInput * speed * speedburst * Time.deltaTime);
-            transform.Translate(Vector3.up * verticalInput * speed * speedburst * Time.deltaTime);
+            if (uiManager.fuelCount <= .01f)
+            {
+                //Debug.Log("Out of Fuel");
+                transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+                transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
+            }
+            else
+            {
+                uiManager.fuelCount = Mathf.Lerp(uiManager.fuelCount, 0f, Time.deltaTime * depleteFuelSpeed);
+                //Debug.Log("FuelCount = " + uiManager.fuelCount);
+                transform.Translate(Vector3.right * horizontalInput * speed * speedburst * Time.deltaTime);
+                transform.Translate(Vector3.up * verticalInput * speed * speedburst * Time.deltaTime);
+            }
+            
+
+            
         }
         else
         {
@@ -168,6 +184,11 @@ public class Player : MonoBehaviour {
             shieldTimer = Time.time + 10f;
             
         }
+        else if(type == PowerUp.Type.Speed)
+        {
+            uiManager.fuelCount += .25f;
+            //Debug.Log("add more fuel");
+        }
     }
 
 
@@ -176,7 +197,7 @@ public class Player : MonoBehaviour {
         if(other.transform.CompareTag("EnemyLaser"))
         {
             Damage();
-            Debug.Log("Player damage");
+            //Debug.Log("Player damage");
         }
     }
 
