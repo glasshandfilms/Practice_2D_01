@@ -11,6 +11,8 @@ public class PowerUp : MonoBehaviour {
     
     public Type type;
 
+    [SerializeField] private AudioClip clip;
+
 	
 	void Start () {
 		
@@ -45,7 +47,7 @@ public class PowerUp : MonoBehaviour {
                     player.ActivatePowerUp(type);
                     
                 }
-
+                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
                 Destroy(this.gameObject);
             }
         }

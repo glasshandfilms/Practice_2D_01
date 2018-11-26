@@ -82,6 +82,7 @@ MonoBehaviour:
   laser: {fileID: 1751258387739046, guid: 0eb3a9341ed218049b462b24cf40e0ef, type: 2}
   enemyExplosionPrefab: {fileID: 1132291516110936, guid: b8abeb0a12028cf4481385be99395d58,
     type: 2}
+  clip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &212190062668166928
 SpriteRenderer:
   m_ObjectHideFlags: 1

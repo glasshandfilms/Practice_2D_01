@@ -9,13 +9,14 @@ public class Enemy : MonoBehaviour {
     public GameObject enemyExplosionPrefab;
     private UIManager uiManager;
     private Player player;
-
+    [SerializeField] private AudioClip clip;
 
     private void Start()
     {
         StartCoroutine(EnemyFireRate());
 
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        
         
     }
     
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour {
             Destroy(other.gameObject);
             Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
             uiManager.UpdateScore();
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
             Destroy(gameObject);
         }
         if (other.transform.CompareTag("Player"))
@@ -62,6 +64,7 @@ public class Enemy : MonoBehaviour {
             }
             
             Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
             Destroy(this.gameObject);
             
             

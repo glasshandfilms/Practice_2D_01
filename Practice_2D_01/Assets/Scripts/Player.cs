@@ -23,6 +23,11 @@ public class Player : MonoBehaviour {
     private UIManager uiManager;
     private GameManager gameManager;
     private SpawnManager spawnManager;
+    private AudioSource audioSource;
+    [SerializeField] private GameObject[] engines;
+    private int hitCount = 0;
+
+
 
     void Start () {
 
@@ -43,6 +48,11 @@ public class Player : MonoBehaviour {
         {
             spawnManager.StartSpawnRoutines();
         }
+
+        audioSource = GetComponent<AudioSource>();
+
+        hitCount = 0;
+
 	}
 	
 	
@@ -122,6 +132,7 @@ public class Player : MonoBehaviour {
     {
         if (Time.time > canFire)
         {
+            audioSource.Play();
             if (tripleShotActivated == true)
             {
                 Instantiate(tripleShot, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
@@ -173,11 +184,23 @@ public class Player : MonoBehaviour {
     {
         //subtract 1 life from player on hit
         //if player has shields, do nothing
+        
 
         if(shieldActivated == true)
         {
             //shieldActivated = false;
             return;
+        }
+
+        hitCount++;
+
+        if (hitCount == 1)
+        {
+            engines[0].SetActive(true);
+        }
+        else if (hitCount == 2)
+        {
+            engines[1].SetActive(true);
         }
 
         lives--;
