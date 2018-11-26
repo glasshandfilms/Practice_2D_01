@@ -31,7 +31,11 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DeathCounter()
     {
+        
+
         yield return new WaitForSeconds(2f);
+
+        uiManager.ShowSpaceStart();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

@@ -139,7 +139,7 @@ dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 7cdcbeb117e5aeccbee1042f4420f2e6 Unity.Postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.ChromaticAberration
 392faf87325b12881519b60a598191c5 Assembly-CSharp.dll:.PowerUp
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
-7466e21b2b0822643cfa4108fb845fde Assembly-CSharp.dll:.UIManager
+86c7d8708b8bb000dd52458d77f4742e Assembly-CSharp.dll:.UIManager
 9e6ff0a3a86750c65615b0096650ad71 Unity.Postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.PostProcessResources
 486cd95c82d8305219c352c06b776e1f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
 108398666b870c8be31bd666b465e311 Unity.Postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.AutoExposure

@@ -16,6 +16,15 @@ public class UIManager : MonoBehaviour {
     public GameObject titleScreen;
     public Slider fuelSlider;
     public float fuelCount;
+    public Text spaceStart;
+
+    void Start()
+    {
+        spaceStart.text = "Welcome to Galaxy Shooter!";
+    }
+
+    
+
 
     public void UpdateLives(int currentLives)
     {
@@ -37,12 +46,19 @@ public class UIManager : MonoBehaviour {
 
     public void ShowTitleScreen()
     {
+        spaceStart.text = "Get Ready!";
         titleScreen.SetActive(true);
     }
     
     public void HideTitleScreen()
     {
+
         titleScreen.SetActive(false);
         scoreText.text = "Score: ";
+    }
+
+    public void ShowSpaceStart()
+    {
+        spaceStart.text = "Press Space to Start";
     }
 }
