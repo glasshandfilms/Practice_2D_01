@@ -22,7 +22,7 @@ public class SpawnManager : MonoBehaviour {
     {
         while (true)
         {          
-            Instantiate(enemy[Random.Range(0, powerups.Count)], new Vector3(Random.Range(-8.5f, 8.5f), 7f, 0f), Quaternion.identity);
+            Instantiate(enemy[Random.Range(0, enemy.Count)], new Vector3(Random.Range(-8.5f, 8.5f), 7f, 0f), Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(1f, 5f));
         }
         

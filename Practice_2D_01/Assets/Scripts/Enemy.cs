@@ -6,27 +6,47 @@ public class Enemy : MonoBehaviour {
 
     public float enemySpeed;
     [SerializeField] private GameObject laser;
-		
-	void Update () {
+    public GameObject enemyExplosionPrefab;
+
+    private void Start()
+    {
+        StartCoroutine(EnemyFireRate());
+    }
+    
+    void Update () {
         transform.position += new Vector3(0, -enemySpeed * Time.deltaTime, 0);
         if(transform.position.y < -8)
         {
             Destroy(gameObject);
         }
 
-        if(transform.position.y <= 4)
+        if(transform.position.y <= 4.5)
         {
-            Instantiate(laser, transform.position + new Vector3(0, 0.98f, 0), Quaternion.identity);
+            EnemyFireRate();
         }
 
 
 	}
 
+    IEnumerator EnemyFireRate()
+    {
+        while(true)
+        {
+            Instantiate(laser, transform.position + new Vector3(0, -1.5f, 0), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(1f,2f));
+        }
+    }
+
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.CompareTag("PlayerLaser"))
         {
+            Destroy(other.gameObject);
+            Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+        
+
     }
 }

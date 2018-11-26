@@ -42,7 +42,7 @@ public class PowerUp : MonoBehaviour {
                 }
                 else if(type == Type.Shield)
                 {
-                    player.shieldActivated = true;
+                    player.ActivatePowerUp(type);
                     
                 }
 

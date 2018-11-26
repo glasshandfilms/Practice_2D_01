@@ -14,10 +14,12 @@ public class Player : MonoBehaviour {
     [SerializeField] private float fireRate = 0.25f;
     public bool tripleShotActivated;
     public bool shieldActivated;
-    
     [SerializeField] private GameObject tripleShot;
     float tripleShotTimer;
-
+    float shieldTimer;
+    public float lives;
+    public GameObject explosionPrefab;
+    public GameObject shieldGameObject;
 
     void Start () {
 
@@ -38,6 +40,15 @@ public class Player : MonoBehaviour {
                 tripleShotActivated = false;
             }
         }
+        if (shieldActivated)
+        {
+            if (shieldTimer < Time.time)
+            {
+                shieldActivated = false;
+                shieldGameObject.SetActive(false);
+            }
+        }
+
         
         
 	}
@@ -125,8 +136,45 @@ public class Player : MonoBehaviour {
         else if(type == PowerUp.Type.Shield)
         {
             shieldActivated = true;
+            shieldGameObject.SetActive(true);
+            shieldTimer = Time.time + 10f;
             
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.transform.CompareTag("EnemyLaser"))
+        {
+            Damage();
+            Debug.Log("Player damage");
+        }
+    }
+
+    public void Damage()
+    {
+        //subtract 1 life from player on hit
+        //if player has shields, do nothing
+
+        if(shieldActivated == true)
+        {
+            //shieldActivated = false;
+            return;
+        }
+
+        lives--;
+
+        if(lives < 1)
+        {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+            
+              
+    }
+
+
+
 
 }
