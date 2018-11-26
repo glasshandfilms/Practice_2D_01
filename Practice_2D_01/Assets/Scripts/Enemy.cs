@@ -7,10 +7,16 @@ public class Enemy : MonoBehaviour {
     public float enemySpeed;
     [SerializeField] private GameObject laser;
     public GameObject enemyExplosionPrefab;
+    private UIManager uiManager;
+    private Player player;
+
 
     private void Start()
     {
         StartCoroutine(EnemyFireRate());
+
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        
     }
     
     void Update () {
@@ -44,7 +50,22 @@ public class Enemy : MonoBehaviour {
         {
             Destroy(other.gameObject);
             Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+            uiManager.UpdateScore();
             Destroy(gameObject);
+        }
+        if (other.transform.CompareTag("Player"))
+        {
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage();
+            }
+            
+            Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+            
+            
+
         }
         
 

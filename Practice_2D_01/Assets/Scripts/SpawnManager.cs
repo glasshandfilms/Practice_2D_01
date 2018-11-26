@@ -11,8 +11,16 @@ public class SpawnManager : MonoBehaviour {
 
     public List<GameObject> enemy = new List<GameObject> () ;
     public List<GameObject> powerups = new List<GameObject> ();
+    private GameManager gameManager;
 
     private void Start()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnPowerUps());
+    }
+
+    public void StartSpawnRoutines()
     {
         StartCoroutine(SpawnEnemies());
         StartCoroutine(SpawnPowerUps());
@@ -20,7 +28,7 @@ public class SpawnManager : MonoBehaviour {
 
     IEnumerator SpawnEnemies()
     {
-        while (true)
+        while (gameManager.gameOver == false)
         {          
             Instantiate(enemy[Random.Range(0, enemy.Count)], new Vector3(Random.Range(-8.5f, 8.5f), 7f, 0f), Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(1f, 5f));
@@ -31,7 +39,7 @@ public class SpawnManager : MonoBehaviour {
 
     IEnumerator SpawnPowerUps()
     {
-        while(true)
+        while(gameManager.gameOver == false)
         {
             Instantiate(powerups[Random.Range(0, powerups.Count)], new Vector3(Random.Range(-8.5f,8.5f), 7f, 0f), Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(5f, 15f));

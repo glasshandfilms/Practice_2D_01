@@ -17,15 +17,32 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject tripleShot;
     float tripleShotTimer;
     float shieldTimer;
-    public float lives;
+    public int lives;
     public GameObject explosionPrefab;
     public GameObject shieldGameObject;
+    private UIManager uiManager;
+    private GameManager gameManager;
+    private SpawnManager spawnManager;
 
     void Start () {
 
-        transform.position = new Vector3(0, 0, 0);   
-        
-                
+        transform.position = new Vector3(0, 0, 0);
+
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        if(uiManager != null)
+        {
+            uiManager.UpdateLives(lives);
+        }
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+
+        if(spawnManager != null)
+        {
+            spawnManager.StartSpawnRoutines();
+        }
 	}
 	
 	
@@ -164,11 +181,14 @@ public class Player : MonoBehaviour {
         }
 
         lives--;
+        uiManager.UpdateLives(lives);
 
         if(lives < 1)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+            gameManager.gameOver = true;
+            uiManager.ShowTitleScreen();
         }
             
               
